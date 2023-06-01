@@ -8,6 +8,7 @@ export default function LoginPage () {
     
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [load, setLoad] = useState(false);
 
     const navigate = useNavigate();
 
@@ -19,12 +20,17 @@ export default function LoginPage () {
     const novo = { email: email, password: password }
 
     const promise = axios.post(URL, novo);
+    setLoad(true)
 
     promise.then( resposta => {
-      navigate('/');
+      
+      navigate('/hoje');
+      console.log(resposta)
     });
 
-    promise.catch( erro => alert(erro.response.data.message));
+    promise.catch( erro => {
+      setLoad(false)
+      alert(erro.response.data.message)});
 
   }
 
@@ -33,9 +39,11 @@ export default function LoginPage () {
 
     <Container>
         <img src={logo} alt="" />
-        <form>
+        
+        <form onSubmit={LogIn}>
         
         <input
+          disabled={load}
           type="email"
           placeholder="E-mail"
           required
@@ -43,6 +51,7 @@ export default function LoginPage () {
           onChange={ (e) => setEmail(e.target.value)}
         />
         <input
+          disabled={load}
           type="password"
           placeholder="Senha"
           required
@@ -50,7 +59,7 @@ export default function LoginPage () {
           onChange={ (e) => setPassword(e.target.value)}
         />
         
-        <button type="submit">Entrar</button>
+        <button disabled={load} type="submit">Entrar</button>
       </form>
       <StyledLink to="/cadastro">Não possui uma conta? Cadastre-se</StyledLink>
 

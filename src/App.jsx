@@ -1,5 +1,6 @@
 import LoginPage from "./pages/LoginPage";
 import SignUp from "./pages/SignUp";
+import MainApp from "./pages/MainApp"
 import styled from "styled-components"
 import axios from 'axios';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -14,7 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />}></Route>
           <Route path="/cadastro" element={<SignUp />}></Route>
-          
+          <Route path="/hoje" element={<MainApp />}></Route>
           
         </Routes>
       </BrowserRouter>

@@ -10,6 +10,7 @@ export default function SignUp () {
     const [password, setPassword] = useState("");  
     const [nome, setNome] = useState("");
     const [foto, setFoto] = useState("");
+    const [load, setLoad] = useState(false);
 
     const navigate = useNavigate();
 
@@ -22,13 +23,19 @@ export default function SignUp () {
 
     const promise = axios.post(URL, novo);
 
+    setLoad(true)
+    
+
     promise.then( resposta => {
       alert('Você foi cadastrado com sucesso!');
-      // navegar para pagina de login
+      console.log(resposta)
       navigate('/');
     });
 
-    promise.catch( erro => alert(erro.response.data.message));
+    promise.catch( erro => {
+      
+      setLoad(false)
+      alert(erro.response.data.message)});
 
   }
 
@@ -36,7 +43,7 @@ export default function SignUp () {
 
     <Container>
         <img src={logo} alt="" />
-        <form>
+        <form onSubmit={signUp}>
         
         <input
           type="email"
