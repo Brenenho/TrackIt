@@ -1,4 +1,9 @@
 import styled from "styled-components"
+import NavBar from "../components/Navbar"
+import Footer from "../components/Footer";
+import { useContext } from 'react';
+import { useEffect } from "react";
+import Context from '../Context';
 import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import axios from "axios"
@@ -6,17 +11,15 @@ import axios from "axios"
 
 export default function MainApp() {
 
+    const {foto, setFoto} = useContext(Context)
 
-
+    
 
     return (
 
         <>
             <Container>
-                <NavBar>
-                    <p>TrackIt</p>
-                    <img src="https://media.discordapp.net/attachments/1096180025130242130/1113285231722639451/image.png" alt="" />
-                </NavBar>
+                <NavBar foto= {foto} />
 
                 <ContentMain>
                     <Titulo>
@@ -58,77 +61,16 @@ export default function MainApp() {
                     
                 </ContentMain>
 
-                <Footer>
-                    <p>Hábitos</p>
-                    <Ellipse>
-                        <p>Hoje</p>
-                    </Ellipse>
-                    <p>Histórico</p>
-
-                </Footer>
+                <Footer />
+                    
             </Container>
         </>
     )
 }
 
-const NavBar = styled.div`
-    position: fixed;
-    width: 100%;
-    height: 70px;
-    left: 0px;
-    top: 0px;
-    background: #126BA5;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 18px;
-    box-sizing: border-box;
-
-    p {
-        font-family: 'Playball';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 38.982px;
-        line-height: 49px;
-        /* identical to box height */
 
 
-        color: #FFFFFF;
-    }
 
-    img {
-        width: 51px;
-        height: 51px;
-    }
-`
-
-const Footer = styled.div`
-    width: 375px;
-    height: 70px;
-    left: 0px;
-    bottom: 0px;
-    position: fixed;
-    background: #FFFFFF;
-    box-sizing: border-box;
-    padding: 0 38px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    p {
-        font-family: 'Lexend Deca';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 17.976px;
-        line-height: 22px;
-        text-align: center;
-
-        color: #52B6FF;
-    }
-    
-
-`
 
 const Container = styled.div`
     background-color: #F2F2F2;
@@ -137,35 +79,6 @@ const Container = styled.div`
     overflow-y: auto;
 `
 
-
-
-
-const Ellipse = styled.div`
-    background-color: #45597e;
-    width: 91px;
-    height: 91px;
-    background: #52B6FF;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    left: 142px;
-    bottom: 10px;
-  
-
-    p {
-        font-family: 'Lexend Deca';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 17.976px;
-        line-height: 22px;
-        text-align: center;
-
-        color: #FFFFFF;
-    }
-
-`
 
 const ContentMain = styled.div`
 

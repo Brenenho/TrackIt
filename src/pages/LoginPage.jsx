@@ -1,3 +1,5 @@
+import {useContext} from 'react';
+import Context from '../Context';
 import styled from "styled-components"
 import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
@@ -9,8 +11,10 @@ export default function LoginPage () {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [load, setLoad] = useState(false);
-
+    const {foto, setFoto} = useContext(Context);
     const navigate = useNavigate();
+
+    
 
   function LogIn(e){
     e.preventDefault();
@@ -22,10 +26,11 @@ export default function LoginPage () {
     const promise = axios.post(URL, novo);
     setLoad(true)
 
+
     promise.then( resposta => {
-      
+      console.log(resposta.data.image)
+      setFoto(resposta.data.image)
       navigate('/hoje');
-      console.log(resposta)
     });
 
     promise.catch( erro => {
