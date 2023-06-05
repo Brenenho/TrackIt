@@ -1,5 +1,5 @@
 import LoginPage from "./pages/LoginPage";
-import SignUp from "./pages/Signup";
+import SignUp from "./pages/SignUp";
 import MainApp from "./pages/MainApp"
 import History from "./pages/History";
 import Habits from "./pages/Habits";
