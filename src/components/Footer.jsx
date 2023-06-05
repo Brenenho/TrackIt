@@ -1,28 +1,53 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Context from '../Context';
+import { useContext } from 'react';
+import {
+    CircularProgressbar,
+    CircularProgressbarWithChildren,
+    buildStyles
+  } from "react-circular-progressbar";
+  import "react-circular-progressbar/dist/styles.css";
+
+
 
 
 export default function Footer() {
 
+
+    const { foto, setFoto, token, setToken, porcentagemConcluida, setPorcentagemConcluida } = useContext(Context);
+    const porcentagem = 66
+
     return (
         <DivFooter>
             <Link to={"/habitos"} style={{ textDecoration: 'none' }}>
-            <p>Hábitos</p>
+                <p>Hábitos</p>
             </Link>
             <Link to={"/hoje"} style={{ textDecoration: 'none' }}>
-            <Ellipse>
-                <p>Hoje</p>
-            </Ellipse>
+                <Ellipse>
+                    <CircularProgressbar
+                        value={porcentagemConcluida}
+                        text={`Hoje`}
+                        background
+                        backgroundPadding={6}
+                        styles={buildStyles({
+                            backgroundColor: "#3e98c7",
+                            textColor: "#fff",
+                            pathColor: "#fff",
+                            trailColor: "transparent"
+                        })}
+                    />
+                </Ellipse>
             </Link>
             <Link to={"/historico"} style={{ textDecoration: 'none' }}>
-            <p>Histórico</p>
+                <p>Histórico</p>
             </Link>
 
         </DivFooter>
 
     )
-}       
+}
 
 
 const DivFooter = styled.div`
@@ -31,6 +56,7 @@ const DivFooter = styled.div`
     left: 0px;
     bottom: 0px;
     position: fixed;
+    z-index: 10;
     background: #FFFFFF;
     box-sizing: border-box;
     padding: 0 38px;
@@ -67,6 +93,14 @@ const Ellipse = styled.div`
     position: absolute;
     left: 142px;
     bottom: 10px;
+    font-family: 'Lexend Deca';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 17.976px;
+        line-height: 22px;
+        text-align: center;
+
+        color: #FFFFFF;
   
 
     p {

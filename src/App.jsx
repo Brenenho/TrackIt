@@ -12,9 +12,11 @@ import Context from './Context';
 
 function App() {
   const [foto, setFoto] = useState("");
+  const [token, setToken] = useState("");
+  const [porcentagemConcluida, setPorcentagemConcluida] = useState(0);
 
   return (
-    <Context.Provider value={{foto, setFoto}}>
+    <Context.Provider value={{foto, setFoto, token, setToken, porcentagemConcluida, setPorcentagemConcluida}}>
     <>
       <BrowserRouter>
         <Routes>

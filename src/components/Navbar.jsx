@@ -14,6 +14,7 @@ export default function NavBar(props) {
 
 const DivNavbar = styled.div`
     position: fixed;
+    z-index: 100;
     width: 100%;
     height: 70px;
     left: 0px;
@@ -41,5 +42,6 @@ const DivNavbar = styled.div`
     img {
         width: 51px;
         height: 51px;
+        border-radius: 50%;
     }
 `

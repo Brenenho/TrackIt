@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import axios from "axios"
 import logo from "../assets/trackit.png"
+import { ThreeDots } from 'react-loader-spinner'
 
 export default function SignUp () {
     
@@ -27,8 +28,8 @@ export default function SignUp () {
     
 
     promise.then( resposta => {
+      setLoad(false)
       alert('Você foi cadastrado com sucesso!');
-      console.log(resposta)
       navigate('/');
     });
 
@@ -41,11 +42,12 @@ export default function SignUp () {
 
     return (
 
-    <Container>
+    <Container load={load}>
         <img src={logo} alt="" />
         <form onSubmit={signUp}>
         
         <input
+        disabled={load}
           type="email"
           placeholder="E-mail"
           required
@@ -53,6 +55,7 @@ export default function SignUp () {
           onChange={ (e) => setEmail(e.target.value)}
         />
         <input
+        disabled={load}
           type="password"
           placeholder="Senha"
           required
@@ -60,6 +63,7 @@ export default function SignUp () {
           onChange={ (e) => setPassword(e.target.value)}
         />
         <input
+        disabled={load}
           type="text"
           placeholder="Nome"
           required
@@ -67,6 +71,7 @@ export default function SignUp () {
           onChange={ (e) => setNome(e.target.value)}
         />
         <input
+        disabled={load}
           type="text"
           placeholder="Foto"
           required
@@ -74,7 +79,20 @@ export default function SignUp () {
           onChange={ (e) => setFoto(e.target.value)}
         />
         
-        <button type="submit">Cadastrar</button>
+        <button  disabled={load} type="submit">
+        {load == true ? (
+            <ThreeDots
+              width= "51"
+              height= "13"
+              radius="9"
+              color="#FFFFFF"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClassName=""
+              visible={true}
+            />
+          ) : ("Cadastrar")}
+        </button>
       </form>
       <StyledLink to="/">Já possui uma conta? Faça Login</StyledLink>
 
@@ -141,11 +159,14 @@ const Container = styled.div`
         background: #52B6FF;
         border-radius: 4.63636px;
         font-family: 'Lexend Deca';
-        
+        display: flex;
+        justify-content: center;
+        align-items: center;
         font-style: normal;
         font-weight: 400;
         font-size: 20.976px;
         line-height: 26px;
+        opacity: ${props => (props.load ? `0.7` : `1`)};
         text-align: center;
         border: none;
         color: #FFFFFF;

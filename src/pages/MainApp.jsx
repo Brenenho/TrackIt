@@ -7,62 +7,230 @@ import Context from '../Context';
 import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import axios from "axios"
+import dayjs from 'dayjs';
+import 'dayjs/locale/pt-br'; // Importe o local específico para o português do Brasil
+
+// Defina o local como 'pt-br'
+
 
 
 export default function MainApp() {
 
-    const {foto, setFoto} = useContext(Context)
-
+    const [Habitos, SetHabitos] = useState([])
+    const { foto, setFoto, token, setToken, porcentagemConcluida, setPorcentagemConcluida } = useContext(Context)
+    dayjs.locale('pt-br');
+    const dataAtual = dayjs().format('DD/MM');
+    const [totalHabitos, setTotalHabitos] = useState(0);
+    const [habitosConcluidos, setHabitosConcluidos] = useState(0);
     
+    const porcentagemConcluida1 = Math.round((habitosConcluidos / totalHabitos) * 100);
+    setPorcentagemConcluida(porcentagemConcluida1)
+
+
+
+    const nomesDiasSemana = [
+        'Domingo',
+        'Segunda',
+        'Terça',
+        'Quarta',
+        'Quinta',
+        'Sexta',
+        'Sábado'
+    ];
+
+    const diaDaSemanaAtual = nomesDiasSemana[dayjs().day()];
+
+
+
+    useEffect(() => {
+
+        const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today`;
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+
+        const promise = axios.get(url, config);
+
+        promise.then(resposta => {
+
+            SetHabitos(resposta.data)
+            setTotalHabitos(resposta.data.length);
+            const concluidos = resposta.data.filter(habito => habito.done);
+            setHabitosConcluidos(concluidos.length);
+
+
+        });
+        promise.catch(erro => console.log(erro.response.data));
+    }, []);
+
+
+    function CheckBox(HabitoSelecionado) {
+
+        
+        if (HabitoSelecionado.done) {
+
+            const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${HabitoSelecionado.id}/uncheck`
+
+            const novo = {}
+
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            };
+
+            const promise = axios.post(URL, novo, config);
+
+
+
+            promise.then(resposta => {
+                
+
+                const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today`;
+
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                };
+
+                const promise = axios.get(url, config);
+
+                promise.then(resposta => {
+
+                    SetHabitos(resposta.data)
+                    
+                    setTotalHabitos(resposta.data.length);
+                    const concluidos = resposta.data.filter(habito => habito.done);
+                    setHabitosConcluidos(concluidos.length);
+
+                });
+                promise.catch(erro => console.log(erro.response.data));
+
+
+            });
+
+            promise.catch(erro => {
+                alert(erro.response.data.message)
+            });
+
+        } else {
+
+            const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${HabitoSelecionado.id}/check`
+
+            const novo = {}
+
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            };
+
+            const promise = axios.post(URL, novo, config);
+
+
+
+            promise.then(resposta => {
+                
+
+                const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today`;
+
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                };
+
+                const promise = axios.get(url, config);
+
+                promise.then(resposta => {
+
+                    SetHabitos(resposta.data)
+                    setTotalHabitos(resposta.data.length);
+                    const concluidos = resposta.data.filter(habito => habito.done);
+                    setHabitosConcluidos(concluidos.length);
+
+
+                });
+                promise.catch(erro => console.log(erro.response.data));
+
+
+            });
+
+            promise.catch(erro => {
+                alert(erro.response.data.message)
+            });
+
+
+
+        }
+
+
+
+    }
 
     return (
 
         <>
             <Container>
-                <NavBar foto= {foto} />
+                <NavBar foto={foto} />
 
                 <ContentMain>
                     <Titulo>
-                        Segunda, 17/05
+                        {`${diaDaSemanaAtual}, ${dataAtual}`}
                     </Titulo>
-                    <SubTitulo>
-                        Nenhum hábito concluído ainda
+                    <SubTitulo habitosConcluidos={habitosConcluidos}>
+                     {habitosConcluidos != 0 ? `${porcentagemConcluida}% dos hábitos concluídos` : "Nenhum hábito concluído ainda"}   
                     </SubTitulo>
-                    <Card>
-                        <div>
-                            <TituloCard>Ler 1 capitulo de livro</TituloCard>
-                            <Sequencia>Sequência atual: 3 dias</Sequencia>
-                            <Recorde>Seu recorde: 5 dias</Recorde>
-                        </div>
-                        <Check>
-                            <img src="https://media.discordapp.net/attachments/931340188024713226/1113687254762799104/image.png" alt="" />
-                        </Check>
-                    </Card>
-                    <Card>
-                        <div>
-                            <TituloCard>Ler 1 capitulo de livro</TituloCard>
-                            <Sequencia>Sequência atual: 3 dias</Sequencia>
-                            <Recorde>Seu recorde: 5 dias</Recorde>
-                        </div>
-                        <Check>
-                            <img src="https://media.discordapp.net/attachments/931340188024713226/1113687254762799104/image.png" alt="" />
-                        </Check>
-                    </Card>
-                    <Card>
-                        <div>
-                            <TituloCard>Ler 1 capitulo de livro</TituloCard>
-                            <Sequencia>Sequência atual: 3 dias</Sequencia>
-                            <Recorde>Seu recorde: 5 dias</Recorde>
-                        </div>
-                        <Check>
-                            <img src="https://media.discordapp.net/attachments/931340188024713226/1113687254762799104/image.png" alt="" />
-                        </Check>
-                    </Card>
-                    
+
+
+                    {Habitos.length != 0 ? (
+                        <>
+                            {
+                                Habitos.map((Habito, index) => (
+
+
+
+                                    <Card isDone={Habito.done}>
+                                        <div>
+                                            <TituloCard>{Habito.name}</TituloCard>
+                                            <Sequencia isDone={Habito.done} >Sequência atual: <span> {`${Habito.currentSequence}`} {Habito.currentSequence == 1 ? "dia" : "dias"}</span></Sequencia>
+                                            <Recorde isDone={Habito.done} isRecord={parseInt(Habito.currentSequence) >= parseInt(Habito.highestSequence) && Habito.currentSequence > 0} >Seu recorde:<span> {`${Habito.highestSequence}`} {Habito.highestSequence == 1 ? "dia" : "dias"}</span></Recorde>
+                                        </div>
+                                        <Check onClick={() => CheckBox(Habito)} isDone={Habito.done} >
+                                            <img src="https://media.discordapp.net/attachments/931340188024713226/1113687254762799104/image.png" alt="" />
+                                        </Check>
+                                    </Card>
+
+                                )
+                                )
+                            }
+
+
+                        </>
+
+                    ) : (
+
+                        <SubTitulo1>
+                            Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
+                        </SubTitulo1>
+
+
+
+                    )}
+
+
+
+
+
+
                 </ContentMain>
 
                 <Footer />
-                    
+
             </Container>
         </>
     )
@@ -101,7 +269,7 @@ const Titulo = styled.p`
     font-weight: 400;
     font-size: 22.976px;
     line-height: 29px;
-    width: 172px;
+    width: 180px;
     height: 29px;
     color: #126BA5;
 `
@@ -115,7 +283,20 @@ const SubTitulo = styled.p`
     font-size: 17.976px;
     line-height: 22px;
     margin-bottom: 28px;
-    color: #BABABA;
+    color: ${props => (props.habitosConcluidos != 0 ? `#8FC549` : `#BABABA`)};
+
+`
+const SubTitulo1 = styled.p`
+    width: 338px;
+    height: 74px;
+    font-family: 'Lexend Deca';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17.976px;
+    line-height: 22px;
+
+    color: #666666;
+
 
 `
 const Card = styled.div`
@@ -156,6 +337,10 @@ font-family: 'Lexend Deca';
         margin-top: 7px;
         color: #666666;
 
+        span {
+            color: ${props => (props.isDone ? `#8FC549` : `#666666`)};
+        }
+
 `
 const Recorde = styled.p`
 
@@ -166,13 +351,17 @@ font-family: 'Lexend Deca';
         line-height: 16px;
         color: #666666;
 
+        span {
+            color: ${props => (props.isDone && props.isRecord ? `#8FC549` : `#666666`)};
+        }
+
 `
 
 const Check = styled.div`
     width: 69px;
     height: 69px;
-    background: #EBEBEB;
-    border: 1px solid #E7E7E7;
+    background: ${props => (props.isDone ? `#8FC549` : `#EBEBEB`)};
+    border: 1px solid ${props => (props.isDone ? `#8FC549` : `#E7E7E7`)}; ; 
     border-radius: 5px;
     display: flex;
         justify-content: center;
