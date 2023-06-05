@@ -47,6 +47,7 @@ export default function SignUp () {
         <form onSubmit={signUp}>
         
         <input
+        data-test="email-input"
         disabled={load}
           type="email"
           placeholder="E-mail"
@@ -55,6 +56,7 @@ export default function SignUp () {
           onChange={ (e) => setEmail(e.target.value)}
         />
         <input
+        data-test="password-input"
         disabled={load}
           type="password"
           placeholder="Senha"
@@ -63,6 +65,7 @@ export default function SignUp () {
           onChange={ (e) => setPassword(e.target.value)}
         />
         <input
+        data-test="user-name-input"
         disabled={load}
           type="text"
           placeholder="Nome"
@@ -71,6 +74,7 @@ export default function SignUp () {
           onChange={ (e) => setNome(e.target.value)}
         />
         <input
+        data-test="user-image-input"
         disabled={load}
           type="text"
           placeholder="Foto"
@@ -79,7 +83,7 @@ export default function SignUp () {
           onChange={ (e) => setFoto(e.target.value)}
         />
         
-        <button  disabled={load} type="submit">
+        <button data-test="signup-btn"  disabled={load} type="submit">
         {load == true ? (
             <ThreeDots
               width= "51"
@@ -94,7 +98,7 @@ export default function SignUp () {
           ) : ("Cadastrar")}
         </button>
       </form>
-      <StyledLink to="/">Já possui uma conta? Faça Login</StyledLink>
+      <StyledLink data-test="login-link" to="/">Já possui uma conta? Faça Login</StyledLink>
 
 
 

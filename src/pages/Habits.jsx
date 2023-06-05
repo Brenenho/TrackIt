@@ -196,7 +196,7 @@ export default function Habits() {
                         <Titulo>
                             Meus Hábitos
                         </Titulo>
-                        <Button onClick={AddHabit}>
+                        <Button data-test="habit-create-btn" onClick={AddHabit}>
                             +
                         </Button>
                     </SuperiorTitle>
@@ -206,9 +206,11 @@ export default function Habits() {
 
                     {started ? (
                         <form onSubmit={SendHabit} >
-                            <CardHabit>
+                            <CardHabit data-test="habit-create-container">
 
                                 <input
+
+                                    data-test="habit-name-input"
                                     type="text"
                                     placeholder="nome do hábito"
                                     required
@@ -218,7 +220,7 @@ export default function Habits() {
                                 <ButtonsDays>
                                     {Days.map((Dia, index) => (
 
-                                        <ButtonDays disabled={load} type="button" isSelected={DiasSelecionados.includes(index)} onClick={() => handleAssentoClick(index)}>{Dia}</ButtonDays>
+                                        <ButtonDays data-test="habit-day" disabled={load} type="button" isSelected={DiasSelecionados.includes(index)} onClick={() => handleAssentoClick(index)}>{Dia}</ButtonDays>
 
                                     )
                                     )}
@@ -226,10 +228,10 @@ export default function Habits() {
 
                                 <ButtonsAction>
 
-                                    <CancelButton onClick={CancelAddHabit}>
+                                    <CancelButton data-test="habit-create-cancel-btn" onClick={CancelAddHabit}>
                                         Cancelar
                                     </CancelButton>
-                                    <SaveButton load={load} type="submit">
+                                    <SaveButton data-test="habit-create-save-btn" load={load} type="submit">
                                         {load == true ? (
                                             <ThreeDots
                                                 width="43"
@@ -255,21 +257,21 @@ export default function Habits() {
 
 
 
-                                    < HabitoSaved >
+                                    < HabitoSaved data-test="habit-container" >
 
-                                        <p>{Habito.name}</p>
+                                        <p data-test="habit-name" >{Habito.name}</p>
 
 
                                         <ButtonsDays>
                                             {Days.map((Dia, index) => (
 
-                                                <ButtonDays type="button" isSelected={Habito.days.includes(index)}>{Dia}</ButtonDays>
+                                                <ButtonDays data-test="habit-day" type="button" isSelected={Habito.days.includes(index)}>{Dia}</ButtonDays>
 
                                             )
                                             )}
                                         </ButtonsDays>
 
-                                        <img onClick={() => DeleteHabit(Habito)} src="https://media.discordapp.net/attachments/931340188024713226/1115183737374777364/image.png" alt="" />
+                                        <img data-test="habit-delete-btn" onClick={() => DeleteHabit(Habito)} src="https://media.discordapp.net/attachments/931340188024713226/1115183737374777364/image.png" alt="" />
                                     </HabitoSaved>
 
                                 )

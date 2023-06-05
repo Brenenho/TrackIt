@@ -5,9 +5,9 @@ export default function NavBar(props) {
 
     return (
 
-        <DivNavbar>
+        <DivNavbar data-test="header">
             <p>TrackIt</p>
-            <img src= {props.foto} alt="" />
+            <img data-test="avatar" src= {props.foto} alt="" />
         </DivNavbar>
     )
 }

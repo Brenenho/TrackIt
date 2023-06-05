@@ -179,10 +179,10 @@ export default function MainApp() {
                 <NavBar foto={foto} />
 
                 <ContentMain>
-                    <Titulo>
+                    <Titulo data-test="today">
                         {`${diaDaSemanaAtual}, ${dataAtual}`}
                     </Titulo>
-                    <SubTitulo habitosConcluidos={habitosConcluidos}>
+                    <SubTitulo ata-test="today-counter" habitosConcluidos={habitosConcluidos}>
                      {habitosConcluidos != 0 ? `${porcentagemConcluida}% dos hábitos concluídos` : "Nenhum hábito concluído ainda"}   
                     </SubTitulo>
 
@@ -194,13 +194,13 @@ export default function MainApp() {
 
 
 
-                                    <Card isDone={Habito.done}>
+                                    <Card data-test="today-habit-container" isDone={Habito.done}>
                                         <div>
-                                            <TituloCard>{Habito.name}</TituloCard>
-                                            <Sequencia isDone={Habito.done} >Sequência atual: <span> {`${Habito.currentSequence}`} {Habito.currentSequence == 1 ? "dia" : "dias"}</span></Sequencia>
-                                            <Recorde isDone={Habito.done} isRecord={parseInt(Habito.currentSequence) >= parseInt(Habito.highestSequence) && Habito.currentSequence > 0} >Seu recorde:<span> {`${Habito.highestSequence}`} {Habito.highestSequence == 1 ? "dia" : "dias"}</span></Recorde>
+                                            <TituloCard data-test="today-habit-name">{Habito.name}</TituloCard>
+                                            <Sequencia data-test="today-habit-sequence" isDone={Habito.done} >Sequência atual: <span> {`${Habito.currentSequence}`} {Habito.currentSequence == 1 ? "dia" : "dias"}</span></Sequencia>
+                                            <Recorde data-test="today-habit-record" isDone={Habito.done} isRecord={parseInt(Habito.currentSequence) >= parseInt(Habito.highestSequence) && Habito.currentSequence > 0} >Seu recorde:<span> {`${Habito.highestSequence}`} {Habito.highestSequence == 1 ? "dia" : "dias"}</span></Recorde>
                                         </div>
-                                        <Check onClick={() => CheckBox(Habito)} isDone={Habito.done} >
+                                        <Check data-test="today-habit-check-btn" onClick={() => CheckBox(Habito)} isDone={Habito.done} >
                                             <img src="https://media.discordapp.net/attachments/931340188024713226/1113687254762799104/image.png" alt="" />
                                         </Check>
                                     </Card>

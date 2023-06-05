@@ -20,11 +20,11 @@ export default function Footer() {
     const porcentagem = 66
 
     return (
-        <DivFooter>
-            <Link to={"/habitos"} style={{ textDecoration: 'none' }}>
+        <DivFooter data-test="menu">
+            <Link data-test="habit-link" to={"/habitos"} style={{ textDecoration: 'none' }}>
                 <p>Hábitos</p>
             </Link>
-            <Link to={"/hoje"} style={{ textDecoration: 'none' }}>
+            <Link data-test="today-link" to={"/hoje"} style={{ textDecoration: 'none' }}>
                 <Ellipse>
                     <CircularProgressbar
                         value={porcentagemConcluida}
@@ -40,7 +40,7 @@ export default function Footer() {
                     />
                 </Ellipse>
             </Link>
-            <Link to={"/historico"} style={{ textDecoration: 'none' }}>
+            <Link data-test="history-link" to={"/historico"} style={{ textDecoration: 'none' }}>
                 <p>Histórico</p>
             </Link>
 

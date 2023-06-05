@@ -52,6 +52,7 @@ export default function LoginPage() {
       <form onSubmit={LogIn}>
 
         <input
+          data-test="email-input"
           disabled={load}
           type="email"
           placeholder="E-mail"
@@ -60,6 +61,7 @@ export default function LoginPage() {
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
+        data-test="password-input"
           disabled={load}
           type="password"
           placeholder="Senha"
@@ -68,7 +70,7 @@ export default function LoginPage() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button  disabled={load} type="submit">
+        <button data-test="login-btn"  disabled={load} type="submit">
           {load == true ? (
             <ThreeDots
               width= "51"
@@ -83,7 +85,7 @@ export default function LoginPage() {
           ) : ("Entrar")}
         </button>
       </form>
-      <StyledLink to="/cadastro">Não possui uma conta? Cadastre-se</StyledLink>
+      <StyledLink data-test="signup-link" to="/cadastro">Não possui uma conta? Cadastre-se</StyledLink>
 
 
 
